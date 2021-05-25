@@ -1,0 +1,157 @@
+JWT(JSON Web Tokens) - JAWT
+===========================
+- Authorization Stratagies
+  1.Session token - reference token
+  2.JSON web token - value token
+  
+  HTTP- stateless protocal
+  
+  			?URL
+  user ------------------> server (web static app)
+	   <------------------
+			HTML
+			
+		?URL + Identity
+  user ------------------> server (dynamic static app)
+	   <------------------
+			HTML
+			
+
+  user ---------------> Banking App
+  		Get accounts
+  		
+  		
+  Ex : customer care support
+  
+  		next day he identify with ticket id what is the issue
+  user --------------------------------------------------------> support team (ticket log)
+  					Ticket number
+  
+  
+  		  Authenticate 
+  user --------------------> webapp(session log)
+       <--------------------
+            Session ID
+            
+            
+    	   Session ID
+  user --------------------> webapp(session log)
+  
+  
+   		  Authenticate 
+  user --------------------> webapp(session log)
+       <--------------------
+     Session ID (Sent back as cookie)
+     
+     
+     	Session ID (makes this automatic)
+  user -----------------------------------> webapp(session log)
+  
+  * SessionID + Cookies -> Most popular mechanisum for authorization.
+  
+  problems in this approach:
+  -------------------------
+  
+  		user ------------> load balancer -----------------> web app1
+  									|
+  									|----------------------> web app2
+  									|
+  									|----------------------> web app3
+  		
+  	to solve this problems JWT comes.
+  	
+  		
+  	  		  Authenticate 
+  user --------------------> webapp(session log)
+       <--------------------
+         		JSON Token
+     i have authenticated you as user A
+  		
+ 
+  		
+  	  Token with JSON Value
+  user --------------------> webapp(session log)(this request has everything i need!)
+       <--------------------
+  
+  
+  	  		  Authenticate 
+  user --------------------> webapp(session log)
+       <--------------------
+         		JWT
+               signed!
+               
+    	       JWT 
+  user --------------------> webapp(session log)(I'll verify the signature first).
+  
+  
+  How does JWT look like? -> jwt.io
+  ---------------------------------
+  
+  Three parts to a JWT
+    
+    - Header - algoritham & token type
+    
+    	{
+    	  "alg": "HS256",
+    	  "typ": "JWT"
+    	}
+    	
+    - Payload - DATA - what ever we send data
+    
+         {
+            "id" : "123",
+            "name": "pratap",
+            "iat": 15124325
+         }
+    
+    - Signature - 
+         HMACSHA256(base64URLEncode(header) + "." +  base64URLEncode(payload), your-256-bit-secret)
+         
+         
+         	1. userID/ password
+     user ------------------------------------------------> server
+     														|
+     		4. JWT to client			 					2. Authentication
+     user<--------------------------------------------------3. JWT (once Authentication completes JWT comes into picture)
+    
+   5. saved  on client side
+         |                     		6. JWT in Http Header
+         1. Localstorage    -------------------------------->  7.validate signature
+         2. cookie               Authorization : Bearer JWT
+          
+  
+     
+     validate signature :
+       
+        hhhhhhhhh.pppppppppppp.ssssssss
+        ---------------------  ---------
+             |					|
+      compute signature -> compare with
+      		(secret)
+      
+  * How secure is a JWT if it readable by anyone?
+   - No credential / secsitive information in a JWT.
+   
+  * What if someone steals my JWT uses it themselves?
+   - Server just verifies if JWT is correct. Doesn't know who sent it.
+   
+   					JWT
+   user -----------------------------> Server 
+   
+   - if i can send the state ability and get authorization someone else
+     can steal my JWT put it into the header of the exact same way get 
+     and authorized won't that work well  yes technically it will work
+     which is why you have to be careful about how you're transmitting 
+     JWT it has to be in an HTTPS connection anf then it has to be in 
+     conjunction with bunch of other established authentication and authorization 
+     mechanism one vey common way of using JWT is using the process of oauth authunticating 
+     and authorizing and what comed with its own security protections to make 
+     sure that people don't steal JWT's.
+     
+   * How do you disable a JWT?
+     disadvantage of JWT
+     
+   
+      
+   
+            

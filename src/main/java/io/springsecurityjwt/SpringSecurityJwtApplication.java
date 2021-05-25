@@ -1,9 +1,10 @@
-package io.javabrains.springsecurityjwt;
+package io.springsecurityjwt;
 
-import io.javabrains.springsecurityjwt.filters.JwtRequestFilter;
-import io.javabrains.springsecurityjwt.models.AuthenticationRequest;
-import io.javabrains.springsecurityjwt.models.AuthenticationResponse;
-import io.javabrains.springsecurityjwt.util.JwtUtil;
+import io.springsecurityjwt.filters.JwtRequestFilter;
+import io.springsecurityjwt.models.AuthenticationRequest;
+import io.springsecurityjwt.models.AuthenticationResponse;
+import io.springsecurityjwt.util.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
